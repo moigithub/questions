@@ -12,8 +12,7 @@ datasource db {
 
 model User {
   id String @id
-  questions Question[]
-  assesments Assesment[]
+  balotas Balotario[]
 }
 
 enum QuestionType{
@@ -22,27 +21,21 @@ enum QuestionType{
   MONTHLY
 }
 
-model Question {
-  id Int @default(autoincrement()) @id
+model Balotario {
+  id String @default(uuid()) @id
   title String
   user User @relation(fields: [userId], references: [id])
   userId String
   type QuestionType
-}
-
-model Assesment {
-  id String @default(uuid()) @id
-  user User @relation(fields: [userId], references: [id])
-  userId String
-  createdAt DateTime @default(now())
-  type QuestionType
   questionAnswers QuestionAnswer[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model QuestionAnswer {
   id Int @default(autoincrement()) @id
   question String
   answer String
-  assesment Assesment @relation(fields: [assesmentId], references: [id])
-  assesmentId String
+  balotario Balotario @relation(fields: [balotarioId], references: [id])
+  balotarioId String
 }
