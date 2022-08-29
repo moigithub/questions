@@ -1,4 +1,4 @@
-import type { Question } from '@prisma/client'
+import type { Balotario } from '@prisma/client'
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { Form, Link, Outlet, useLoaderData } from '@remix-run/react'
@@ -17,12 +17,11 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect('/questions')
 }
 
-type Questions = { questions: Question[] }
+type Balotarios = { questions: Balotario[] }
 
 export default function QuestionView() {
-  const { questions } = useLoaderData<Questions>()
+  const { questions } = useLoaderData<Balotarios>()
   console.log('list questions', questions)
-  let classType = 'flex justify-center items-center rounded text-[10px] p-px px-1 uppercase'
 
   return (
     <div>
@@ -39,6 +38,8 @@ export default function QuestionView() {
 
       <ul className='my-4'>
         {questions.map(question => {
+          let classType = 'flex justify-center items-center rounded text-[10px] p-px px-1 uppercase'
+
           switch (question.type) {
             case 'DAILY':
               classType += ' text-white bg-green-500'
@@ -62,20 +63,30 @@ export default function QuestionView() {
                   </Link>
                   <span className='ml-3 text-bold'>{question.title}</span>
                 </span>
-                <Form method='post'>
-                  <input type='hidden' name='id' value={question.id} />
-                  <button
-                    type='submit'
-                    className='cursor-pointer text-white flex justify-center items-center rounded bg-red-600 h-[32px] w-[32px]'
+                <span className='flex items-center'>
+                  <Link
+                    to={`${question.type}/${question.id}`}
+                    className='mr-2 px-2 py-1 rounded text-white bg-orange-500'
                   >
-                    X
-                  </button>
-                </Form>
+                    View
+                  </Link>
+                  <Form method='post'>
+                    <input type='hidden' name='id' value={question.id} />
+                    <button
+                      type='submit'
+                      className='cursor-pointer text-white flex justify-center items-center rounded bg-red-600 h-[32px] w-[32px]'
+                    >
+                      X
+                    </button>
+                  </Form>
+                </span>
               </div>
             </li>
           )
         })}
       </ul>
+
+      <Outlet />
     </div>
   )
 }

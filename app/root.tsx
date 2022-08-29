@@ -54,43 +54,43 @@ export default function App() {
   )
 }
 
-// export function ErrorBoundary({ error }: { error: Error }) {
-//   console.error('Error', error)
-//   return (
-//     <Document>
-//       <div className='flex flex-col justify-center items-center h-screen'>
-//         <h1 className='text-red-400 font-bold text-3xl'>There was an error</h1>
-//         <p>{error?.message}</p>
-//       </div>
-//     </Document>
-//   )
-// }
+export function ErrorBoundary({ error }: { error: Error }) {
+  console.error('Error', error)
+  return (
+    <Document>
+      <div className='flex flex-col justify-center items-center h-screen'>
+        <h1 className='text-red-400 font-bold text-3xl'>There was an error</h1>
+        <p>{error?.message}</p>
+      </div>
+    </Document>
+  )
+}
 
-// export function CatchBoundary({ error }: { error: Error }) {
-//   const caught = useCatch()
+export function CatchBoundary({ error }: { error: Error }) {
+  const caught = useCatch()
 
-//   console.error('catch error', error, caught)
+  console.error('catch error', error, caught)
 
-//   let message = ''
-//   switch (caught.status) {
-//     case 401:
-//       message = 'UnAuthorized!'
-//       break
-//     case 404:
-//       message = 'Page not found!'
-//       break
-//     default:
-//       throw new Error(caught.data || caught.statusText)
-//   }
+  let message = ''
+  switch (caught.status) {
+    case 401:
+      message = 'UnAuthorized!'
+      break
+    case 404:
+      message = 'Page not found!'
+      break
+    default:
+      throw new Error(caught.data || caught.statusText)
+  }
 
-//   return (
-//     <Document>
-//       <div className='flex flex-col justify-center items-center h-screen'>
-//         <h1 className='text-red-400 font-bold text-3xl'>{message}</h1>
-//         <p>
-//           {caught.status}: {caught.statusText}
-//         </p>
-//       </div>
-//     </Document>
-//   )
-// }
+  return (
+    <Document>
+      <div className='flex flex-col justify-center items-center h-screen'>
+        <h1 className='text-red-400 font-bold text-3xl'>{message}</h1>
+        <p>
+          {caught.status}: {caught.statusText}
+        </p>
+      </div>
+    </Document>
+  )
+}

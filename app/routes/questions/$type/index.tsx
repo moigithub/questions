@@ -26,7 +26,7 @@ type Questions = { questions: Question[] }
 
 export default function QuestionView() {
   const { questions } = useLoaderData<Questions>()
-  console.log('list questions', questions)
+  console.log('type questions', questions)
   let classType = 'flex justify-center items-center rounded text-[10px] p-px px-1 uppercase'
 
   return (
@@ -74,15 +74,23 @@ export default function QuestionView() {
                   <span className={classType}>{question.type}</span>
                   <span className='ml-3 text-bold'>{question.title}</span>
                 </span>
-                <Form method='post'>
-                  <input type='hidden' name='id' value={question.id} />
-                  <button
-                    type='submit'
-                    className='cursor-pointer text-white flex justify-center items-center rounded bg-red-600 h-[32px] w-[32px]'
+                <span className='flex items-center'>
+                  <Link
+                    to={`${question.type}/${question.id}`}
+                    className='mr-2 px-2 py-1 rounded text-white bg-orange-500'
                   >
-                    X
-                  </button>
-                </Form>
+                    View
+                  </Link>
+                  <Form method='post'>
+                    <input type='hidden' name='id' value={question.id} />
+                    <button
+                      type='submit'
+                      className='cursor-pointer text-white flex justify-center items-center rounded bg-red-600 h-[32px] w-[32px]'
+                    >
+                      X
+                    </button>
+                  </Form>
+                </span>
               </div>
             </li>
           )
